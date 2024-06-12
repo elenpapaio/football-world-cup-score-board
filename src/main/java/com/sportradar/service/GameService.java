@@ -2,9 +2,14 @@ package com.sportradar.service;
 
 import com.sportradar.model.Game;
 import com.sportradar.model.Team;
+import com.sportradar.repository.GameRepository;
 import com.sportradar.util.InputUtils;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public class GameService {
+
+    private final GameRepository gameRepository;
 
     public Game startGame() {
         String homeTeamName = InputUtils.readStringFromKeyboard();
