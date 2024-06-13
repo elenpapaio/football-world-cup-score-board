@@ -1,9 +1,13 @@
 package com.sportradar.util;
 
+import java.util.Scanner;
+
 public class InputUtils {
 
     public static String readStringFromKeyboard(String messageToUser) {
-        return null;
+        System.out.println(messageToUser);
+        Scanner keyboard = new Scanner(System.in);
+        return keyboard.nextLine();
     }
 
     public static int readIntFromKeyboard(String messageToUser) {
