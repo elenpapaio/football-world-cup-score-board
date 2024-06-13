@@ -7,8 +7,7 @@ import com.sportradar.util.InputUtils;
 import org.junit.jupiter.api.*;
 import org.mockito.*;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class GameServiceTest {
 
@@ -39,6 +38,7 @@ public class GameServiceTest {
     public void startGame() {
         try(MockedStatic<InputUtils> mockInputUtils = Mockito.mockStatic(InputUtils.class)) {
             mockInputUtils.when(InputUtils::readStringFromKeyboard).thenReturn("Uruguay").thenReturn("Italy");
+            when(gameRepository.save(any())).thenAnswer(i -> i.getArguments()[0]);
 
             Game startedGame = gameService.startGame();
             mockInputUtils.verify(InputUtils::readStringFromKeyboard, times(2));

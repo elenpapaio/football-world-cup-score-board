@@ -14,7 +14,7 @@ public class GameService {
     public Game startGame() {
         String homeTeamName = InputUtils.readStringFromKeyboard();
         String awayTeamName = InputUtils.readStringFromKeyboard();
-        return Game.builder()
+        Game startedGame = Game.builder()
                 .homeTeam(Team.builder()
                         .name(homeTeamName)
                         .build())
@@ -24,6 +24,7 @@ public class GameService {
                 .awayTeamScore(0)
                 .homeTeamScore(0)
                 .build();
+        return gameRepository.save(startedGame);
     }
 
 }
