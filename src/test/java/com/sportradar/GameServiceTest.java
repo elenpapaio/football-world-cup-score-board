@@ -38,13 +38,13 @@ public class GameServiceTest {
     @DisplayName(value = "startGame - It should receive home and away team names from user input and save the started game to the database layer")
     public void startGame_test1() {
         try (MockedStatic<InputUtils> mockInputUtils = Mockito.mockStatic(InputUtils.class)) {
-            mockInputUtils.when(InputUtils::readStringFromKeyboard)
+            mockInputUtils.when(() -> InputUtils.readStringFromKeyboard(anyString()))
                     .thenReturn("Uruguay")
                     .thenReturn("Italy");
             when(gameRepository.save(any())).thenAnswer(i -> i.getArguments()[0]);
 
             Game startedGame = gameService.startGame();
-            mockInputUtils.verify(InputUtils::readStringFromKeyboard, times(2));
+            mockInputUtils.verify(() -> InputUtils.readStringFromKeyboard(anyString()), times(2));
             verify(gameRepository, times(1)).save(startedGame);
 
             assertEquals(startedGame.getHomeTeam().getName(), "Uruguay");
@@ -56,7 +56,7 @@ public class GameServiceTest {
     @DisplayName(value = "startGame - It should throw exception when receives invalid team name from user input")
     public void startGame_test2() {
         try (MockedStatic<InputUtils> mockInputUtils = Mockito.mockStatic(InputUtils.class)) {
-            mockInputUtils.when(InputUtils::readStringFromKeyboard)
+            mockInputUtils.when(() -> InputUtils.readStringFromKeyboard(anyString()))
                     .thenReturn("abc")
                     .thenReturn("Italy");
 
@@ -64,7 +64,7 @@ public class GameServiceTest {
             assertEquals("Invalid one or both team names. Given homeTeamName: abc. Given awayTeamName: Italy",
                     exception.getMessage());
 
-            mockInputUtils.verify(InputUtils::readStringFromKeyboard, times(2));
+            mockInputUtils.verify(() -> InputUtils.readStringFromKeyboard(anyString()), times(2));
             verify(gameRepository, times(0)).save(any());
         }
     }

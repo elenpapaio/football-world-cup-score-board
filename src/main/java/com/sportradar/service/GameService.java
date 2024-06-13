@@ -13,8 +13,11 @@ public class GameService {
     private final GameRepository gameRepository;
 
     public Game startGame() {
-        String homeTeamName = InputUtils.readStringFromKeyboard();
-        String awayTeamName = InputUtils.readStringFromKeyboard();
+        String homeTeamInputMessage = "Please enter home team name: ";
+        String homeTeamName = InputUtils.readStringFromKeyboard(homeTeamInputMessage);
+
+        String awayTeamInputMessage = "Please enter away team name: ";
+        String awayTeamName = InputUtils.readStringFromKeyboard(awayTeamInputMessage);
 
         if (!TeamName.contains(homeTeamName) || !TeamName.contains(awayTeamName)) {
             throw new RuntimeException(
