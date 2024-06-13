@@ -37,8 +37,10 @@ public class GameServiceTest {
     @Test
     @DisplayName(value = "startGame - It should receive home and away team names from user input and save the started game to the database layer")
     public void startGame_test1() {
-        try(MockedStatic<InputUtils> mockInputUtils = Mockito.mockStatic(InputUtils.class)) {
-            mockInputUtils.when(InputUtils::readStringFromKeyboard).thenReturn("Uruguay").thenReturn("Italy");
+        try (MockedStatic<InputUtils> mockInputUtils = Mockito.mockStatic(InputUtils.class)) {
+            mockInputUtils.when(InputUtils::readStringFromKeyboard)
+                    .thenReturn("Uruguay")
+                    .thenReturn("Italy");
             when(gameRepository.save(any())).thenAnswer(i -> i.getArguments()[0]);
 
             Game startedGame = gameService.startGame();
@@ -53,11 +55,14 @@ public class GameServiceTest {
     @Test
     @DisplayName(value = "startGame - It should throw exception when receives invalid team name from user input")
     public void startGame_test2() {
-        try(MockedStatic<InputUtils> mockInputUtils = Mockito.mockStatic(InputUtils.class)) {
-            mockInputUtils.when(InputUtils::readStringFromKeyboard).thenReturn("abc").thenReturn("Italy");
+        try (MockedStatic<InputUtils> mockInputUtils = Mockito.mockStatic(InputUtils.class)) {
+            mockInputUtils.when(InputUtils::readStringFromKeyboard)
+                    .thenReturn("abc")
+                    .thenReturn("Italy");
 
             RuntimeException exception = Assertions.assertThrows(RuntimeException.class, () -> gameService.startGame());
-            assertEquals("Invalid one or both team names. Given homeTeamName: abc. Given awayTeamName: Italy", exception.getMessage());
+            assertEquals("Invalid one or both team names. Given homeTeamName: abc. Given awayTeamName: Italy",
+                    exception.getMessage());
 
             mockInputUtils.verify(InputUtils::readStringFromKeyboard, times(2));
             verify(gameRepository, times(0)).save(any());

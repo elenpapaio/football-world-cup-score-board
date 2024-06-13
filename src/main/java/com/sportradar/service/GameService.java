@@ -1,5 +1,6 @@
 package com.sportradar.service;
 
+import com.sportradar.data.TeamName;
 import com.sportradar.model.Game;
 import com.sportradar.model.Team;
 import com.sportradar.repository.GameRepository;
@@ -14,6 +15,13 @@ public class GameService {
     public Game startGame() {
         String homeTeamName = InputUtils.readStringFromKeyboard();
         String awayTeamName = InputUtils.readStringFromKeyboard();
+
+        if (!TeamName.contains(homeTeamName) || !TeamName.contains(awayTeamName)) {
+            throw new RuntimeException(
+                    String.format("Invalid one or both team names. Given homeTeamName: %s. Given awayTeamName: %s",
+                            homeTeamName, awayTeamName));
+        }
+
         Game startedGame = Game.builder()
                 .homeTeam(Team.builder()
                         .name(homeTeamName)
