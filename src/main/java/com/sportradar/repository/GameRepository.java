@@ -10,7 +10,7 @@ public class GameRepository {
     private final InMemoryDatabase inMemoryDatabase;
 
     public Game save(Game game) {
-        return game;
+        return inMemoryDatabase.insertGame(game);
     }
 
 }

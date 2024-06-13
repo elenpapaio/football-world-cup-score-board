@@ -44,9 +44,9 @@ public class GameServiceTest {
             when(gameRepository.save(any())).thenAnswer(i -> i.getArguments()[0]);
 
             Game startedGame = gameService.startGame();
+
             mockInputUtils.verify(() -> InputUtils.readStringFromKeyboard(anyString()), times(2));
             verify(gameRepository, times(1)).save(startedGame);
-
             assertEquals(startedGame.getHomeTeam().getName(), "Uruguay");
             assertEquals(startedGame.getAwayTeam().getName(), "Italy");
         }
@@ -63,7 +63,6 @@ public class GameServiceTest {
             RuntimeException exception = Assertions.assertThrows(RuntimeException.class, () -> gameService.startGame());
             assertEquals("Invalid one or both team names. Given homeTeamName: abc. Given awayTeamName: Italy",
                     exception.getMessage());
-
             mockInputUtils.verify(() -> InputUtils.readStringFromKeyboard(anyString()), times(2));
             verify(gameRepository, times(0)).save(any());
         }

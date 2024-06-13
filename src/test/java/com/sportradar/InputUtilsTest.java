@@ -37,6 +37,7 @@ public class InputUtilsTest {
     public void readStringFromKeyboard() {
         provideInput("Italy");
         String input = InputUtils.readStringFromKeyboard("insert team name: ");
+
         assertEquals("Italy", input);
         assertEquals("insert team name: \r\n", outContent.toString());
     }
