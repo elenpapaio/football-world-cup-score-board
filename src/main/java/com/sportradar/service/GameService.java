@@ -19,15 +19,7 @@ public class GameService {
         String awayTeamInputMessage = "Please enter away team name: ";
         String awayTeamName = InputUtils.readStringFromKeyboard(awayTeamInputMessage);
 
-        if (!TeamName.contains(homeTeamName) || !TeamName.contains(awayTeamName)) {
-            throw new RuntimeException(
-                    String.format("Invalid one or both team names. Given homeTeamName: %s. Given awayTeamName: %s",
-                            homeTeamName, awayTeamName));
-        }
-
-        if (homeTeamName.equals(awayTeamName)) {
-            throw new RuntimeException("Home team name and away team name cannot be the same.");
-        }
+        validateStartGameUserInput(homeTeamName, awayTeamName);
 
         Game startedGame = Game.builder()
                 .homeTeam(Team.builder()
@@ -54,6 +46,18 @@ public class GameService {
             System.out.println("The game with id " + gameId + " has been removed successfully.");
         } else {
             System.out.println("The game with the given id does not exist.");
+        }
+    }
+
+    private void validateStartGameUserInput(String homeTeamName, String awayTeamName) {
+        if (!TeamName.contains(homeTeamName) || !TeamName.contains(awayTeamName)) {
+            throw new RuntimeException(
+                    String.format("Invalid one or both team names. Given homeTeamName: %s. Given awayTeamName: %s",
+                            homeTeamName, awayTeamName));
+        }
+
+        if (homeTeamName.equals(awayTeamName)) {
+            throw new RuntimeException("Home team name and away team name cannot be the same.");
         }
     }
 
