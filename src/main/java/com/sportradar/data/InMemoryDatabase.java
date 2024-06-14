@@ -30,6 +30,10 @@ public class InMemoryDatabase {
         return objectToInsert;
     }
 
+    public Game deleteGameById(int gameId) {
+        throw new UnsupportedOperationException();
+    }
+
     private int getNewId() {
         int id = newId;
         newId = newId + 1;
