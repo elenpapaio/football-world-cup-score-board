@@ -11,7 +11,9 @@ public class InputUtils {
     }
 
     public static int readIntFromKeyboard(String messageToUser) {
-        throw new UnsupportedOperationException();
+        System.out.println(messageToUser);
+        Scanner keyboard = new Scanner(System.in);
+        return keyboard.nextInt();
     }
 
 }
