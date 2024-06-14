@@ -45,7 +45,16 @@ public class GameService {
     }
 
     public void finishGame() {
-        throw new UnsupportedOperationException();
+        String gameIdInputMessage = "Please provide the id of the game you want to finish: ";
+        int gameId = InputUtils.readIntFromKeyboard(gameIdInputMessage);
+
+        Game deletedGame = gameRepository.deleteById(gameId);
+
+        if (deletedGame != null) {
+            System.out.println("The game with id " + gameId + " has been removed successfully.");
+        } else {
+            System.out.println("The game with the given id does not exist.");
+        }
     }
 
 }
