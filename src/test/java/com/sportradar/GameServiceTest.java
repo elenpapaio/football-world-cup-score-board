@@ -69,14 +69,12 @@ public class GameServiceTest {
     }
 
     @Test
-    @DisplayName(value = "startGame - It should throw exception when receives the same team names from user input")
+    @DisplayName(value = "startGame - It should throw exception when receives the same name for both teams from user input")
     public void startGame_test3() {
         try (MockedStatic<InputUtils> mockInputUtils = Mockito.mockStatic(InputUtils.class)) {
             mockInputUtils.when(() -> InputUtils.readStringFromKeyboard(anyString()))
                     .thenReturn("Italy")
                     .thenReturn("Italy");
-
-            when(gameRepository.save(any())).thenAnswer(i -> i.getArguments()[0]);
 
             RuntimeException exception = Assertions.assertThrows(RuntimeException.class, () -> gameService.startGame());
             assertEquals("Home team name and away team name cannot be the same.",

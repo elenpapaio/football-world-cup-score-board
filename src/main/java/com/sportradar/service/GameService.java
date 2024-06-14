@@ -25,6 +25,10 @@ public class GameService {
                             homeTeamName, awayTeamName));
         }
 
+        if (homeTeamName.equals(awayTeamName)) {
+            throw new RuntimeException("Home team name and away team name cannot be the same.");
+        }
+
         Game startedGame = Game.builder()
                 .homeTeam(Team.builder()
                         .name(homeTeamName)
