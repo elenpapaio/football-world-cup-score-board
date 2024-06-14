@@ -1,13 +1,17 @@
 package com.sportradar;
 
 import com.sportradar.model.Game;
+import com.sportradar.model.Team;
 import com.sportradar.repository.GameRepository;
 import com.sportradar.service.GameService;
 import com.sportradar.util.InputUtils;
 import org.junit.jupiter.api.*;
 import org.mockito.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class GameServiceTest {
@@ -22,15 +26,19 @@ public class GameServiceTest {
     private GameRepository gameRepository;
 
     private AutoCloseable closeable;
+    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private final PrintStream originalOut = System.out;
 
     @BeforeEach
     public void init() {
         closeable = MockitoAnnotations.openMocks(this);
         gameService = new GameService(gameRepository);
+        System.setOut(new PrintStream(outContent));
     }
 
     @AfterEach
     public void releaseMocks() throws Exception {
+        System.setOut(originalOut);
         closeable.close();
     }
 
@@ -81,6 +89,50 @@ public class GameServiceTest {
                     exception.getMessage());
             mockInputUtils.verify(() -> InputUtils.readStringFromKeyboard(anyString()), times(2));
             verify(gameRepository, times(0)).save(any());
+        }
+    }
+
+    @Test
+    @DisplayName(value = "finishGame - It should receive the game id to be finished from user input and print success " +
+            "message after successful removal from the db layer")
+    public void finishGame_test1() {
+        try (MockedStatic<InputUtils> mockInputUtils = Mockito.mockStatic(InputUtils.class)) {
+            mockInputUtils.when(() -> InputUtils.readIntFromKeyboard(anyString()))
+                    .thenReturn(1);
+            when(gameRepository.deleteById(anyInt())).thenReturn(Game.builder()
+                    .gameId(1)
+                    .homeTeam(Team.builder()
+                            .name("Spain")
+                            .build())
+                    .awayTeam(Team.builder()
+                            .name("Brazil")
+                            .build())
+                    .awayTeamScore(0)
+                    .homeTeamScore(0)
+                    .build());
+
+            gameService.finishGame();
+
+            mockInputUtils.verify(() -> InputUtils.readIntFromKeyboard(anyString()), times(1));
+            verify(gameRepository, times(1)).deleteById(1);
+            assertEquals("The game with id 1 has been removed successfully.\r\n", outContent.toString());
+        }
+    }
+
+    @Test
+    @DisplayName(value = "finishGame - It should receive the game id to be finished from user input and print " +
+            "appropriate message after failed removal from the db layer")
+    public void finishGame_test2() {
+        try (MockedStatic<InputUtils> mockInputUtils = Mockito.mockStatic(InputUtils.class)) {
+            mockInputUtils.when(() -> InputUtils.readIntFromKeyboard(anyString()))
+                    .thenReturn(5);
+            when(gameRepository.deleteById(anyInt())).thenReturn(null);
+
+            gameService.finishGame();
+
+            mockInputUtils.verify(() -> InputUtils.readIntFromKeyboard(anyString()), times(1));
+            verify(gameRepository, times(1)).deleteById(5);
+            assertEquals("The game with the given id does not exist.\r\n", outContent.toString());
         }
     }
 

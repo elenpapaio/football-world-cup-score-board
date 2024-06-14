@@ -44,4 +44,8 @@ public class GameService {
         return savedGame;
     }
 
+    public void finishGame() {
+        throw new UnsupportedOperationException();
+    }
+
 }
