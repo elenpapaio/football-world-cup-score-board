@@ -6,6 +6,7 @@ import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class InMemoryDatabase {
     @Getter
@@ -31,7 +32,11 @@ public class InMemoryDatabase {
     }
 
     public Game deleteGameById(int gameId) {
-        throw new UnsupportedOperationException();
+        Optional<Game> gameToBeRemoved = games.stream()
+                .filter(game -> game.getGameId() == gameId)
+                .findFirst();
+        gameToBeRemoved.ifPresent(games::remove);
+        return gameToBeRemoved.orElse(null);
     }
 
     private int getNewId() {
