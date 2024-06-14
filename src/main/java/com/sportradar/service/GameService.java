@@ -35,7 +35,9 @@ public class GameService {
                 .awayTeamScore(0)
                 .homeTeamScore(0)
                 .build();
-        return gameRepository.save(startedGame);
+        Game savedGame = gameRepository.save(startedGame);
+        System.out.println("Started game with id: " + savedGame.getGameId());
+        return savedGame;
     }
 
 }
