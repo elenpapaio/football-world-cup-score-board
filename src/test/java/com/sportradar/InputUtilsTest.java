@@ -42,4 +42,14 @@ public class InputUtilsTest {
         assertEquals("insert team name: \r\n", outContent.toString());
     }
 
+    @Test
+    @DisplayName("readIntFromKeyboard - It should read an int value from keyboard")
+    public void readIntFromKeyboard() {
+        provideInput("1");
+        int input = InputUtils.readIntFromKeyboard("insert the id of the game you want to finish: ");
+
+        assertEquals(1, input);
+        assertEquals("insert the id of the game you want to finish: \r\n", outContent.toString());
+    }
+
 }

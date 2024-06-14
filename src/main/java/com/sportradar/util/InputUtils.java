@@ -11,7 +11,7 @@ public class InputUtils {
     }
 
     public static int readIntFromKeyboard(String messageToUser) {
-        return 0;
+        throw new UnsupportedOperationException();
     }
 
 }
