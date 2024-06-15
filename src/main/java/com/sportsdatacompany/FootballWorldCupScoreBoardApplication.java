@@ -31,7 +31,7 @@ public class FootballWorldCupScoreBoardApplication {
 					gameService.updateScore();
 					break;
 				case 4:
-					//todo
+					gameService.getGamesByTotalScore();
 					break;
 				case 5:
 					exit = true;

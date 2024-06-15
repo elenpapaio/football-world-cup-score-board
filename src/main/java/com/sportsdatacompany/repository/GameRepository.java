@@ -13,8 +13,8 @@ public class GameRepository {
 
     private final InMemoryDatabase inMemoryDatabase;
 
-    public Game save(Game game) {
-        return inMemoryDatabase.insertGame(game);
+    public Game save(GameDto gameDto) {
+        return inMemoryDatabase.insertGame(gameDto);
     }
 
     public Game deleteById(int gameId) {

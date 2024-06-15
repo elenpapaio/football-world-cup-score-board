@@ -14,17 +14,17 @@ public class InMemoryDatabase {
     private final List<Game> games = new ArrayList<>();
     private int newId = 1;
 
-    public Game insertGame(Game game) {
+    public Game insertGame(GameDto gameDto) {
         Game gameToBeInserted = Game.builder()
                 .gameId(getNewId())
                 .homeTeam(Team.builder()
-                        .name(game.getHomeTeam().getName())
+                        .name(gameDto.getHomeTeamName())
                         .build())
                 .awayTeam(Team.builder()
-                        .name(game.getAwayTeam().getName())
+                        .name(gameDto.getAwayTeamName())
                         .build())
-                .awayTeamScore(game.getAwayTeamScore())
-                .homeTeamScore(game.getHomeTeamScore())
+                .awayTeamScore(gameDto.getAwayTeamScore())
+                .homeTeamScore(gameDto.getHomeTeamScore())
                 .build();
         games.add(gameToBeInserted);
         return gameToBeInserted;

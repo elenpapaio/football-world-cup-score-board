@@ -1,5 +1,6 @@
 package com.sportsdatacompany;
 
+import com.sportsdatacompany.dto.GameDto;
 import com.sportsdatacompany.model.Game;
 import com.sportsdatacompany.model.Team;
 import com.sportsdatacompany.repository.GameRepository;
@@ -51,12 +52,15 @@ public class GameServiceTest {
             mockInputUtils.when(() -> InputUtils.readStringFromKeyboard(anyString()))
                     .thenReturn("Uruguay")
                     .thenReturn("Italy");
-            when(gameRepository.save(any())).thenAnswer(i -> i.getArguments()[0]);
+            when(gameRepository.save(any())).thenReturn(Game.builder()
+                    .gameId(1)
+                    .homeTeam(Team.builder().name("Uruguay").build())
+                    .awayTeam(Team.builder().name("Italy").build()).build());
 
             Game startedGame = gameService.startGame();
 
             mockInputUtils.verify(() -> InputUtils.readStringFromKeyboard(anyString()), times(2));
-            verify(gameRepository, times(1)).save(startedGame);
+            verify(gameRepository, times(1)).save(any(GameDto.class));
             assertEquals(startedGame.getHomeTeam().getName(), "Uruguay");
             assertEquals(startedGame.getAwayTeam().getName(), "Italy");
         }
@@ -103,12 +107,8 @@ public class GameServiceTest {
                     .thenReturn(1);
             when(gameRepository.deleteById(anyInt())).thenReturn(Game.builder()
                     .gameId(1)
-                    .homeTeam(Team.builder()
-                            .name("Spain")
-                            .build())
-                    .awayTeam(Team.builder()
-                            .name("Brazil")
-                            .build())
+                    .homeTeam(Team.builder().name("Spain").build())
+                    .awayTeam(Team.builder().name("Brazil").build())
                     .awayTeamScore(0)
                     .homeTeamScore(0)
                     .build());
@@ -149,24 +149,16 @@ public class GameServiceTest {
                     .thenReturn(0); //away team score
             when(gameRepository.findById(anyInt())).thenReturn(Optional.ofNullable(Game.builder()
                     .gameId(1)
-                    .homeTeam(Team.builder()
-                            .name("Spain")
-                            .build())
-                    .awayTeam(Team.builder()
-                            .name("Brazil")
-                            .build())
+                    .homeTeam(Team.builder().name("Spain").build())
+                    .awayTeam(Team.builder().name("Brazil").build())
                     .homeTeamScore(0)
                     .awayTeamScore(0)
                     .build()));
 
             when(gameRepository.update(any())).thenReturn(Game.builder()
                     .gameId(1)
-                    .homeTeam(Team.builder()
-                            .name("Spain")
-                            .build())
-                    .awayTeam(Team.builder()
-                            .name("Brazil")
-                            .build())
+                    .homeTeam(Team.builder().name("Spain").build())
+                    .awayTeam(Team.builder().name("Brazil").build())
                     .homeTeamScore(1)
                     .awayTeamScore(0)
                     .build());
@@ -191,12 +183,8 @@ public class GameServiceTest {
                     .thenReturn(0); //away team score
             when(gameRepository.findById(anyInt())).thenReturn(Optional.ofNullable(Game.builder()
                     .gameId(1)
-                    .homeTeam(Team.builder()
-                            .name("Spain")
-                            .build())
-                    .awayTeam(Team.builder()
-                            .name("Brazil")
-                            .build())
+                    .homeTeam(Team.builder().name("Spain").build())
+                    .awayTeam(Team.builder().name("Brazil").build())
                     .homeTeamScore(2)
                     .awayTeamScore(0)
                     .build()));
@@ -233,36 +221,24 @@ public class GameServiceTest {
     public void getGamesByTotalScore() {
         Game game1 = Game.builder()
                 .gameId(1)
-                .homeTeam(Team.builder()
-                        .name("Italy")
-                        .build())
-                .awayTeam(Team.builder()
-                        .name("Uruguay")
-                        .build())
+                .homeTeam(Team.builder().name("Italy").build())
+                .awayTeam(Team.builder().name("Uruguay").build())
                 .homeTeamScore(1)
                 .awayTeamScore(1)
                 .build();
 
         Game game2 = Game.builder()
                 .gameId(2)
-                .homeTeam(Team.builder()
-                        .name("Spain")
-                        .build())
-                .awayTeam(Team.builder()
-                        .name("Brazil")
-                        .build())
+                .homeTeam(Team.builder().name("Spain").build())
+                .awayTeam(Team.builder().name("Brazil").build())
                 .homeTeamScore(2)
                 .awayTeamScore(1)
                 .build();
 
         Game game3 = Game.builder()
                 .gameId(2)
-                .homeTeam(Team.builder()
-                        .name("Spain")
-                        .build())
-                .awayTeam(Team.builder()
-                        .name("Italy")
-                        .build())
+                .homeTeam(Team.builder().name("Spain").build())
+                .awayTeam(Team.builder().name("Italy").build())
                 .homeTeamScore(1)
                 .awayTeamScore(1)
                 .build();

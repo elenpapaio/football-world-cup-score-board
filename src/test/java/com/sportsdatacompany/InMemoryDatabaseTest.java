@@ -29,24 +29,21 @@ public class InMemoryDatabaseTest {
     @Test
     @DisplayName("insertGame - It should insert the provided game to the in memory database")
     public void insertGame() {
-        Game game = Game.builder()
-                .homeTeam(Team.builder()
-                        .name("Italy")
-                        .build())
-                .awayTeam(Team.builder()
-                        .name("Uruguay")
-                        .build())
+        GameDto gameDto = GameDto.builder()
+                .homeTeamName("Italy")
+                .awayTeamName("Uruguay")
                 .awayTeamScore(0)
                 .homeTeamScore(0)
                 .build();
 
-        Game insertedGame = inMemoryDatabase.insertGame(game);
+        Game expectedInsertedGame = Game.builder()
+                .gameId(1)
+                .homeTeam(Team.builder().name("Italy").build())
+                .awayTeam(Team.builder().name("Uruguay").build()).build();
 
-        assertEquals(insertedGame.getGameId(), 1);
-        assertThat(insertedGame)
-                .usingRecursiveComparison()
-                .ignoringFields("gameId")
-                .isEqualTo(game);
+        Game insertedGame = inMemoryDatabase.insertGame(gameDto);
+
+        assertEquals(insertedGame, expectedInsertedGame);
     }
 
     @Test
@@ -54,24 +51,16 @@ public class InMemoryDatabaseTest {
     public void deleteGameById_test1() {
         Game game1 = Game.builder()
                 .gameId(1)
-                .homeTeam(Team.builder()
-                        .name("Italy")
-                        .build())
-                .awayTeam(Team.builder()
-                        .name("Uruguay")
-                        .build())
+                .homeTeam(Team.builder().name("Italy").build())
+                .awayTeam(Team.builder().name("Uruguay").build())
                 .awayTeamScore(1)
                 .homeTeamScore(0)
                 .build();
 
         Game game2 = Game.builder()
                 .gameId(2)
-                .homeTeam(Team.builder()
-                        .name("Spain")
-                        .build())
-                .awayTeam(Team.builder()
-                        .name("Brazil")
-                        .build())
+                .homeTeam(Team.builder().name("Spain").build())
+                .awayTeam(Team.builder().name("Brazil").build())
                 .awayTeamScore(0)
                 .homeTeamScore(0)
                 .build();
@@ -89,12 +78,8 @@ public class InMemoryDatabaseTest {
     public void deleteGameById_test2() {
         Game game = Game.builder()
                 .gameId(1)
-                .homeTeam(Team.builder()
-                        .name("Italy")
-                        .build())
-                .awayTeam(Team.builder()
-                        .name("Uruguay")
-                        .build())
+                .homeTeam(Team.builder().name("Italy").build())
+                .awayTeam(Team.builder().name("Uruguay").build())
                 .awayTeamScore(1)
                 .homeTeamScore(0)
                 .build();
@@ -112,12 +97,8 @@ public class InMemoryDatabaseTest {
     public void findGameById_test1() {
         Game game = Game.builder()
                 .gameId(1)
-                .homeTeam(Team.builder()
-                        .name("Italy")
-                        .build())
-                .awayTeam(Team.builder()
-                        .name("Uruguay")
-                        .build())
+                .homeTeam(Team.builder().name("Italy").build())
+                .awayTeam(Team.builder().name("Uruguay").build())
                 .homeTeamScore(1)
                 .awayTeamScore(0)
                 .build();
@@ -135,12 +116,8 @@ public class InMemoryDatabaseTest {
     public void findGameById_test2() {
         Game game = Game.builder()
                 .gameId(1)
-                .homeTeam(Team.builder()
-                        .name("Italy")
-                        .build())
-                .awayTeam(Team.builder()
-                        .name("Uruguay")
-                        .build())
+                .homeTeam(Team.builder().name("Italy").build())
+                .awayTeam(Team.builder().name("Uruguay").build())
                 .homeTeamScore(1)
                 .awayTeamScore(0)
                 .build();
@@ -157,12 +134,8 @@ public class InMemoryDatabaseTest {
     public void updateGame_test1() {
         Game game = Game.builder()
                 .gameId(2)
-                .homeTeam(Team.builder()
-                        .name("Spain")
-                        .build())
-                .awayTeam(Team.builder()
-                        .name("Brazil")
-                        .build())
+                .homeTeam(Team.builder().name("Spain").build())
+                .awayTeam(Team.builder().name("Brazil").build())
                 .homeTeamScore(0)
                 .awayTeamScore(0)
                 .build();
@@ -188,12 +161,8 @@ public class InMemoryDatabaseTest {
     public void updateGame_test2() {
         Game game = Game.builder()
                 .gameId(1)
-                .homeTeam(Team.builder()
-                        .name("Italy")
-                        .build())
-                .awayTeam(Team.builder()
-                        .name("Uruguay")
-                        .build())
+                .homeTeam(Team.builder().name("Italy").build())
+                .awayTeam(Team.builder().name("Uruguay").build())
                 .homeTeamScore(1)
                 .awayTeamScore(0)
                 .build();
@@ -214,24 +183,16 @@ public class InMemoryDatabaseTest {
     public void findAllGames() {
         Game game1 = Game.builder()
                 .gameId(1)
-                .homeTeam(Team.builder()
-                        .name("Italy")
-                        .build())
-                .awayTeam(Team.builder()
-                        .name("Uruguay")
-                        .build())
+                .homeTeam(Team.builder().name("Italy").build())
+                .awayTeam(Team.builder().name("Uruguay").build())
                 .homeTeamScore(1)
                 .awayTeamScore(1)
                 .build();
 
         Game game2 = Game.builder()
                 .gameId(2)
-                .homeTeam(Team.builder()
-                        .name("Spain")
-                        .build())
-                .awayTeam(Team.builder()
-                        .name("Brazil")
-                        .build())
+                .homeTeam(Team.builder().name("Spain").build())
+                .awayTeam(Team.builder().name("Brazil").build())
                 .homeTeamScore(2)
                 .awayTeamScore(0)
                 .build();

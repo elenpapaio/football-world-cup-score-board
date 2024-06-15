@@ -10,5 +10,7 @@ public class GameDto {
     private int gameId;
     private int homeTeamScore;
     private int awayTeamScore;
+    private String homeTeamName;
+    private String awayTeamName;
 
 }

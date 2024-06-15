@@ -3,7 +3,6 @@ package com.sportsdatacompany.service;
 import com.sportsdatacompany.data.TeamName;
 import com.sportsdatacompany.dto.GameDto;
 import com.sportsdatacompany.model.Game;
-import com.sportsdatacompany.model.Team;
 import com.sportsdatacompany.repository.GameRepository;
 import com.sportsdatacompany.util.InputUtils;
 import lombok.AllArgsConstructor;
@@ -26,17 +25,14 @@ public class GameService {
 
         validateStartGameUserInput(homeTeamName, awayTeamName);
 
-        Game startedGame = Game.builder()
-                .homeTeam(Team.builder()
-                        .name(homeTeamName)
-                        .build())
-                .awayTeam(Team.builder()
-                        .name(awayTeamName)
-                        .build())
-                .awayTeamScore(0)
+        GameDto startedGameDto = GameDto.builder()
                 .homeTeamScore(0)
+                .awayTeamScore(0)
+                .homeTeamName(homeTeamName)
+                .awayTeamName(awayTeamName)
                 .build();
-        Game savedGame = gameRepository.save(startedGame);
+
+        Game savedGame = gameRepository.save(startedGameDto);
         System.out.println("Started game with id: " + savedGame.getGameId());
         return savedGame;
     }
