@@ -54,7 +54,17 @@ public class InMemoryDatabase {
     }
 
     public List<Game> findAllGames() {
-        throw new UnsupportedOperationException();
+        List<Game> gamesClonedList = new ArrayList<>();
+        for (Game game : games) {
+            gamesClonedList.add(Game.builder()
+                    .gameId(game.getGameId())
+                    .homeTeam(Team.builder().name(game.getHomeTeam().getName()).build())
+                    .awayTeam(Team.builder().name(game.getAwayTeam().getName()).build())
+                    .homeTeamScore(game.getHomeTeamScore())
+                    .awayTeamScore(game.getAwayTeamScore())
+                    .build());
+        }
+        return gamesClonedList;
     }
 
     private int getNewId() {
