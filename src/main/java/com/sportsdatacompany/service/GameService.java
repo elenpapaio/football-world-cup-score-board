@@ -77,6 +77,10 @@ public class GameService {
 
     }
 
+    public void getGamesByTotalScore() {
+        throw new UnsupportedOperationException();
+    }
+
     private void validateStartGameUserInput(String homeTeamName, String awayTeamName) {
         if (!TeamName.contains(homeTeamName) || !TeamName.contains(awayTeamName)) {
             throw new RuntimeException(

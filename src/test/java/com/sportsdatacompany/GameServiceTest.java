@@ -10,9 +10,10 @@ import org.mockito.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class GameServiceTest {
@@ -225,6 +226,52 @@ public class GameServiceTest {
             verify(gameRepository, times(1)).findById(1);
             verify(gameRepository, times(0)).update(any());
         }
+    }
+
+    @Test
+    @DisplayName("getGamesByTotalScore - It should return the given list sorted by total score")
+    public void getGamesByTotalScore() {
+        Game game1 = Game.builder()
+                .gameId(1)
+                .homeTeam(Team.builder()
+                        .name("Italy")
+                        .build())
+                .awayTeam(Team.builder()
+                        .name("Uruguay")
+                        .build())
+                .homeTeamScore(1)
+                .awayTeamScore(1)
+                .build();
+
+        Game game2 = Game.builder()
+                .gameId(2)
+                .homeTeam(Team.builder()
+                        .name("Spain")
+                        .build())
+                .awayTeam(Team.builder()
+                        .name("Brazil")
+                        .build())
+                .homeTeamScore(2)
+                .awayTeamScore(1)
+                .build();
+
+        Game game3 = Game.builder()
+                .gameId(2)
+                .homeTeam(Team.builder()
+                        .name("Spain")
+                        .build())
+                .awayTeam(Team.builder()
+                        .name("Italy")
+                        .build())
+                .homeTeamScore(1)
+                .awayTeamScore(1)
+                .build();
+
+        when(gameRepository.findAll()).thenReturn(Arrays.asList(game1, game2, game3));
+
+        gameService.getGamesByTotalScore();
+
+        assertEquals("Spain 2 - Brazil 1\r\nSpain 1 - Italy 1\r\nItaly 1 - Uruguay 1\r\n", outContent.toString());
     }
 
 }
