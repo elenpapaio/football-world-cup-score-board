@@ -1,14 +1,12 @@
 package com.sportsdatacompany;
 
 import com.sportsdatacompany.util.InputUtils;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.InputMismatchException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -44,12 +42,23 @@ public class InputUtilsTest {
 
     @Test
     @DisplayName("readIntFromKeyboard - It should read an int value from keyboard")
-    public void readIntFromKeyboard() {
+    public void readIntFromKeyboard_test1() {
         provideInput("1");
         int input = InputUtils.readIntFromKeyboard("insert the id of the game you want to finish: ");
 
         assertEquals(1, input);
         assertEquals("insert the id of the game you want to finish: \r\n", outContent.toString());
+    }
+
+    @Test
+    @DisplayName("readIntFromKeyboard - It should throw exception when reading an invalid value from keyboard")
+    public void readIntFromKeyboard_test2() {
+        provideInput("test");
+
+        InputMismatchException exception = Assertions.assertThrows(InputMismatchException.class,
+                () -> InputUtils.readIntFromKeyboard("insert the id of the game you want to finish: "));
+        assertEquals("Invalid input - must be a number",
+                exception.getMessage());
     }
 
 }
