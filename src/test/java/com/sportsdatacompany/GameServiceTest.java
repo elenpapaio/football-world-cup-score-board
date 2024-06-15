@@ -55,7 +55,10 @@ public class GameServiceTest {
             when(gameRepository.save(any())).thenReturn(Game.builder()
                     .gameId(1)
                     .homeTeam(Team.builder().name("Uruguay").build())
-                    .awayTeam(Team.builder().name("Italy").build()).build());
+                    .awayTeam(Team.builder().name("Italy").build())
+                    .homeTeamScore(0)
+                    .awayTeamScore(0)
+                    .build());
 
             Game startedGame = gameService.startGame();
 

@@ -39,7 +39,10 @@ public class InMemoryDatabaseTest {
         Game expectedInsertedGame = Game.builder()
                 .gameId(1)
                 .homeTeam(Team.builder().name("Italy").build())
-                .awayTeam(Team.builder().name("Uruguay").build()).build();
+                .awayTeam(Team.builder().name("Uruguay").build())
+                .homeTeamScore(0)
+                .awayTeamScore(0)
+                .build();
 
         Game insertedGame = inMemoryDatabase.insertGame(gameDto);
 
