@@ -1,5 +1,6 @@
 package com.sportradar.data;
 
+import com.sportradar.dto.GameDto;
 import com.sportradar.model.Game;
 import com.sportradar.model.Team;
 import lombok.Getter;
@@ -14,7 +15,7 @@ public class InMemoryDatabase {
     private int newId = 1;
 
     public Game insertGame(Game game) {
-        Game objectToInsert = Game.builder()
+        Game gameToBeInserted = Game.builder()
                 .gameId(getNewId())
                 .homeTeam(Team.builder()
                         .name(game.getHomeTeam()
@@ -27,8 +28,8 @@ public class InMemoryDatabase {
                 .awayTeamScore(game.getAwayTeamScore())
                 .homeTeamScore(game.getHomeTeamScore())
                 .build();
-        games.add(objectToInsert);
-        return objectToInsert;
+        games.add(gameToBeInserted);
+        return gameToBeInserted;
     }
 
     public Game deleteGameById(int gameId) {
@@ -37,6 +38,14 @@ public class InMemoryDatabase {
                 .findFirst();
         gameToBeRemoved.ifPresent(games::remove);
         return gameToBeRemoved.orElse(null);
+    }
+
+    public Optional<Game> findGameById(int gameId) {
+        throw new UnsupportedOperationException();
+    }
+
+    public Game updateGame(GameDto gameDto) {
+        throw new UnsupportedOperationException();
     }
 
     private int getNewId() {

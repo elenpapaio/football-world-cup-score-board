@@ -10,6 +10,7 @@ import org.mockito.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -133,6 +134,96 @@ public class GameServiceTest {
             mockInputUtils.verify(() -> InputUtils.readIntFromKeyboard(anyString()), times(1));
             verify(gameRepository, times(1)).deleteById(5);
             assertEquals("The game with the given id does not exist.\r\n", outContent.toString());
+        }
+    }
+
+    @Test
+    @DisplayName("updateScore - It should receive the game id and home and away team scores to be updated from " +
+            "user input and print success message after successful update to the db layer")
+    public void updateScore_test1() {
+        try (MockedStatic<InputUtils> mockInputUtils = Mockito.mockStatic(InputUtils.class)) {
+            mockInputUtils.when(() -> InputUtils.readIntFromKeyboard(anyString()))
+                    .thenReturn(1) //game id
+                    .thenReturn(1) //home team score
+                    .thenReturn(0); //away team score
+            when(gameRepository.findById(anyInt())).thenReturn(Optional.ofNullable(Game.builder()
+                    .gameId(1)
+                    .homeTeam(Team.builder()
+                            .name("Spain")
+                            .build())
+                    .awayTeam(Team.builder()
+                            .name("Brazil")
+                            .build())
+                    .homeTeamScore(0)
+                    .awayTeamScore(0)
+                    .build()));
+
+            when(gameRepository.update(any())).thenReturn(Game.builder()
+                    .gameId(1)
+                    .homeTeam(Team.builder()
+                            .name("Spain")
+                            .build())
+                    .awayTeam(Team.builder()
+                            .name("Brazil")
+                            .build())
+                    .homeTeamScore(1)
+                    .awayTeamScore(0)
+                    .build());
+
+
+            gameService.updateScore();
+
+            mockInputUtils.verify(() -> InputUtils.readIntFromKeyboard(anyString()), times(3));
+            verify(gameRepository, times(1)).findById(1);
+            verify(gameRepository, times(1)).update(any());
+            assertEquals("The score for the game Spain - Brazil has been updated successfully. New score: 1 - 0.\r\n", outContent.toString());
+        }
+    }
+
+    @Test
+    @DisplayName("updateScore - It should throw exception when receives score from user input smaller than the existing one")
+    public void updateScore_test2() {
+        try (MockedStatic<InputUtils> mockInputUtils = Mockito.mockStatic(InputUtils.class)) {
+            mockInputUtils.when(() -> InputUtils.readIntFromKeyboard(anyString()))
+                    .thenReturn(1) //game id
+                    .thenReturn(1) //home team score
+                    .thenReturn(0); //away team score
+            when(gameRepository.findById(anyInt())).thenReturn(Optional.ofNullable(Game.builder()
+                    .gameId(1)
+                    .homeTeam(Team.builder()
+                            .name("Spain")
+                            .build())
+                    .awayTeam(Team.builder()
+                            .name("Brazil")
+                            .build())
+                    .homeTeamScore(2)
+                    .awayTeamScore(0)
+                    .build()));
+
+            RuntimeException exception = Assertions.assertThrows(RuntimeException.class, () -> gameService.updateScore());
+            assertEquals("The given score for home/away team cannot be smaller than the already existing one.",
+                    exception.getMessage());
+            mockInputUtils.verify(() -> InputUtils.readIntFromKeyboard(anyString()), times(3));
+            verify(gameRepository, times(1)).findById(1);
+            verify(gameRepository, times(0)).update(any());
+        }
+    }
+
+    @Test
+    @DisplayName("updateScore - It should throw exception when the game id from user input does not exist in the database layer")
+    public void updateScore_test3() {
+        try (MockedStatic<InputUtils> mockInputUtils = Mockito.mockStatic(InputUtils.class)) {
+            mockInputUtils.when(() -> InputUtils.readIntFromKeyboard(anyString()))
+                    .thenReturn(1) //game id
+                    .thenReturn(1) //home team score
+                    .thenReturn(0); //away team score
+            when(gameRepository.findById(anyInt())).thenReturn(Optional.empty());
+
+            RuntimeException exception = Assertions.assertThrows(RuntimeException.class, () -> gameService.updateScore());
+            assertEquals("Game with id 1 not found.", exception.getMessage());
+            mockInputUtils.verify(() -> InputUtils.readIntFromKeyboard(anyString()), times(3));
+            verify(gameRepository, times(1)).findById(1);
+            verify(gameRepository, times(0)).update(any());
         }
     }
 

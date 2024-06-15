@@ -49,6 +49,10 @@ public class GameService {
         }
     }
 
+    public void updateScore() {
+
+    }
+
     private void validateStartGameUserInput(String homeTeamName, String awayTeamName) {
         if (!TeamName.contains(homeTeamName) || !TeamName.contains(awayTeamName)) {
             throw new RuntimeException(
