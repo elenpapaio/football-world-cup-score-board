@@ -1,4 +1,4 @@
-package com.sportradar.model;
+package com.sportsdatacompany.model;
 
 import lombok.Builder;
 import lombok.Data;

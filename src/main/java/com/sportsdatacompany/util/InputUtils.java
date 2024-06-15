@@ -1,4 +1,4 @@
-package com.sportradar.util;
+package com.sportsdatacompany.util;
 
 import java.util.Scanner;
 

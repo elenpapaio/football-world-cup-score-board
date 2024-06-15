@@ -1,9 +1,9 @@
-package com.sportradar;
+package com.sportsdatacompany;
 
-import com.sportradar.data.InMemoryDatabase;
-import com.sportradar.dto.GameDto;
-import com.sportradar.model.Game;
-import com.sportradar.model.Team;
+import com.sportsdatacompany.data.InMemoryDatabase;
+import com.sportsdatacompany.dto.GameDto;
+import com.sportsdatacompany.model.Game;
+import com.sportsdatacompany.model.Team;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

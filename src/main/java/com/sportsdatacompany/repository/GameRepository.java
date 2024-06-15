@@ -1,8 +1,8 @@
-package com.sportradar.repository;
+package com.sportsdatacompany.repository;
 
-import com.sportradar.data.InMemoryDatabase;
-import com.sportradar.dto.GameDto;
-import com.sportradar.model.Game;
+import com.sportsdatacompany.data.InMemoryDatabase;
+import com.sportsdatacompany.dto.GameDto;
+import com.sportsdatacompany.model.Game;
 import lombok.AllArgsConstructor;
 
 import java.util.Optional;

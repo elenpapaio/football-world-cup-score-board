@@ -1,4 +1,4 @@
-package com.sportradar.data;
+package com.sportsdatacompany.data;
 
 public enum TeamName {
     MEXICO("Mexico"),

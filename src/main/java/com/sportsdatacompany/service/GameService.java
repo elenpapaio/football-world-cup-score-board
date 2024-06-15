@@ -1,11 +1,11 @@
-package com.sportradar.service;
+package com.sportsdatacompany.service;
 
-import com.sportradar.data.TeamName;
-import com.sportradar.dto.GameDto;
-import com.sportradar.model.Game;
-import com.sportradar.model.Team;
-import com.sportradar.repository.GameRepository;
-import com.sportradar.util.InputUtils;
+import com.sportsdatacompany.data.TeamName;
+import com.sportsdatacompany.dto.GameDto;
+import com.sportsdatacompany.model.Game;
+import com.sportsdatacompany.model.Team;
+import com.sportsdatacompany.repository.GameRepository;
+import com.sportsdatacompany.util.InputUtils;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor

@@ -1,10 +1,10 @@
-package com.sportradar;
+package com.sportsdatacompany;
 
-import com.sportradar.model.Game;
-import com.sportradar.model.Team;
-import com.sportradar.repository.GameRepository;
-import com.sportradar.service.GameService;
-import com.sportradar.util.InputUtils;
+import com.sportsdatacompany.model.Game;
+import com.sportsdatacompany.model.Team;
+import com.sportsdatacompany.repository.GameRepository;
+import com.sportsdatacompany.service.GameService;
+import com.sportsdatacompany.util.InputUtils;
 import org.junit.jupiter.api.*;
 import org.mockito.*;
 

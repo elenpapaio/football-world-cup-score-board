@@ -1,8 +1,8 @@
-package com.sportradar.data;
+package com.sportsdatacompany.data;
 
-import com.sportradar.dto.GameDto;
-import com.sportradar.model.Game;
-import com.sportradar.model.Team;
+import com.sportsdatacompany.dto.GameDto;
+import com.sportsdatacompany.model.Game;
+import com.sportsdatacompany.model.Team;
 import lombok.Getter;
 
 import java.util.ArrayList;

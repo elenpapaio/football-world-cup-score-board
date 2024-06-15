@@ -1,9 +1,9 @@
-package com.sportradar;
+package com.sportsdatacompany;
 
-import com.sportradar.data.InMemoryDatabase;
-import com.sportradar.repository.GameRepository;
-import com.sportradar.service.GameService;
-import com.sportradar.util.InputUtils;
+import com.sportsdatacompany.data.InMemoryDatabase;
+import com.sportsdatacompany.repository.GameRepository;
+import com.sportsdatacompany.service.GameService;
+import com.sportsdatacompany.util.InputUtils;
 
 public class FootballWorldCupScoreBoardApplication {
 

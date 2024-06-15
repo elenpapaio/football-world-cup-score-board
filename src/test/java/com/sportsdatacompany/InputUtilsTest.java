@@ -1,6 +1,6 @@
-package com.sportradar;
+package com.sportsdatacompany;
 
-import com.sportradar.util.InputUtils;
+import com.sportsdatacompany.util.InputUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

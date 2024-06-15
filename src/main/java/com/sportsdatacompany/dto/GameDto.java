@@ -1,15 +1,13 @@
-package com.sportradar.model;
+package com.sportsdatacompany.dto;
 
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class Game {
+public class GameDto {
 
     private int gameId;
-    private Team homeTeam;
-    private Team awayTeam;
     private int homeTeamScore;
     private int awayTeamScore;
 
