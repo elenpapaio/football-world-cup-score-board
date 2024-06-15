@@ -1,6 +1,7 @@
 package com.sportradar.service;
 
 import com.sportradar.data.TeamName;
+import com.sportradar.dto.GameDto;
 import com.sportradar.model.Game;
 import com.sportradar.model.Team;
 import com.sportradar.repository.GameRepository;
@@ -50,6 +51,29 @@ public class GameService {
     }
 
     public void updateScore() {
+        String gameIdInputMessage = "Please provide the id of the game you want to update its score: ";
+        int gameId = InputUtils.readIntFromKeyboard(gameIdInputMessage);
+
+        String homeTeamScoreInputMessage = "Please provide the score of the home team: ";
+        int homeTeamScore = InputUtils.readIntFromKeyboard(homeTeamScoreInputMessage);
+
+        String awayTeamScoreInputMessage = "Please provide the score of the away team: ";
+        int awayTeamScore = InputUtils.readIntFromKeyboard(awayTeamScoreInputMessage);
+
+        Game gameToBeUpdated = gameRepository.findById(gameId).orElse(null);
+        validateUpdateScoreUserInput(gameToBeUpdated, gameId, homeTeamScore, awayTeamScore);
+
+        GameDto gameDto = GameDto.builder()
+                .gameId(gameId)
+                .homeTeamScore(homeTeamScore)
+                .awayTeamScore(awayTeamScore)
+                .build();
+
+        Game updatedGame = gameRepository.update(gameDto);
+
+        System.out.printf("The score for the game %s - %s has been updated successfully. New score: %s - %s.\r\n",
+                updatedGame.getHomeTeam().getName(), updatedGame.getAwayTeam().getName(),
+                updatedGame.getHomeTeamScore(), updatedGame.getAwayTeamScore());
 
     }
 
@@ -62,6 +86,16 @@ public class GameService {
 
         if (homeTeamName.equals(awayTeamName)) {
             throw new RuntimeException("Home team name and away team name cannot be the same.");
+        }
+    }
+
+    private void validateUpdateScoreUserInput(Game gameToBeUpdated, int gameId, int homeTeamScore, int awayTeamScore) {
+        if (gameToBeUpdated == null) {
+            throw new RuntimeException("Game with id " + gameId + " not found.");
+        }
+        if (homeTeamScore < gameToBeUpdated.getHomeTeamScore() || awayTeamScore < gameToBeUpdated.getAwayTeamScore()) {
+            throw new RuntimeException(
+                    "The given score for home/away team cannot be smaller than the already existing one.");
         }
     }
 
