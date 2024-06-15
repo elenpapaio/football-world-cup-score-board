@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -206,6 +207,44 @@ public class InMemoryDatabaseTest {
                 .build());
 
         assertNull(updatedGame);
+    }
+
+    @Test
+    @DisplayName("findAllGames - It should return a deep clone of the in memory database games list")
+    public void findAllGames() {
+        Game game1 = Game.builder()
+                .gameId(1)
+                .homeTeam(Team.builder()
+                        .name("Italy")
+                        .build())
+                .awayTeam(Team.builder()
+                        .name("Uruguay")
+                        .build())
+                .homeTeamScore(1)
+                .awayTeamScore(1)
+                .build();
+
+        Game game2 = Game.builder()
+                .gameId(2)
+                .homeTeam(Team.builder()
+                        .name("Spain")
+                        .build())
+                .awayTeam(Team.builder()
+                        .name("Brazil")
+                        .build())
+                .homeTeamScore(2)
+                .awayTeamScore(0)
+                .build();
+
+        inMemoryDatabase.getGames().addAll(Arrays.asList(game1, game2));
+
+        List<Game> retrievedGameList = inMemoryDatabase.findAllGames();
+
+        assertEquals(retrievedGameList, inMemoryDatabase.getGames());
+
+        //deep clone check
+        retrievedGameList.get(0).setAwayTeamScore(4);
+        assertEquals(inMemoryDatabase.getGames().get(0).getAwayTeamScore(), 1);
     }
 
 }
