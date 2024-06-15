@@ -5,6 +5,7 @@ import com.sportsdatacompany.dto.GameDto;
 import com.sportsdatacompany.model.Game;
 import lombok.AllArgsConstructor;
 
+import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -26,6 +27,10 @@ public class GameRepository {
 
     public Game update(GameDto gameDto) {
         return inMemoryDatabase.updateGame(gameDto);
+    }
+
+    public List<Game> findAll() {
+        return inMemoryDatabase.findAllGames();
     }
 
 }

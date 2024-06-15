@@ -8,6 +8,10 @@ import com.sportsdatacompany.repository.GameRepository;
 import com.sportsdatacompany.util.InputUtils;
 import lombok.AllArgsConstructor;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @AllArgsConstructor
 public class GameService {
 
@@ -78,7 +82,24 @@ public class GameService {
     }
 
     public void getGamesByTotalScore() {
-        throw new UnsupportedOperationException();
+        List<Game> existingGames = gameRepository.findAll();
+        Collections.reverse(existingGames);
+
+        List<Game> gamesSortedByTotalScore = existingGames.stream()
+                .sorted((g1, g2) -> {
+                    int sumOfScoresG1 = g1.getAwayTeamScore() + g1.getHomeTeamScore();
+                    int sumOfScoresG2 = g2.getAwayTeamScore() + g2.getHomeTeamScore();
+                    if (sumOfScoresG1 == sumOfScoresG2)
+                        return 0;
+                    return sumOfScoresG1 < sumOfScoresG2 ? 1 : -1;
+                }).
+                collect(Collectors.toList());
+
+        for (Game game : gamesSortedByTotalScore) {
+            System.out.printf("%s %s - %s %s\r\n", game.getHomeTeam().getName(), game.getHomeTeamScore(),
+                    game.getAwayTeam().getName(), game.getAwayTeamScore());
+        }
+
     }
 
     private void validateStartGameUserInput(String homeTeamName, String awayTeamName) {

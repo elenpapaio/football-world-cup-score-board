@@ -55,6 +55,10 @@ public class InMemoryDatabase {
         return gameToBeUpdated.orElse(null);
     }
 
+    public List<Game> findAllGames() {
+        throw new UnsupportedOperationException();
+    }
+
     private int getNewId() {
         int id = newId;
         newId = newId + 1;
