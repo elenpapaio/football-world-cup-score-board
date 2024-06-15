@@ -41,11 +41,18 @@ public class InMemoryDatabase {
     }
 
     public Optional<Game> findGameById(int gameId) {
-        throw new UnsupportedOperationException();
+        return games.stream()
+                .filter(game -> game.getGameId() == gameId)
+                .findFirst();
     }
 
     public Game updateGame(GameDto gameDto) {
-        throw new UnsupportedOperationException();
+        Optional<Game> gameToBeUpdated = games.stream()
+                .filter(game -> game.getGameId() == gameDto.getGameId())
+                .findFirst();
+        gameToBeUpdated.ifPresent(game -> game.setHomeTeamScore(gameDto.getHomeTeamScore()));
+        gameToBeUpdated.ifPresent(game -> game.setAwayTeamScore(gameDto.getAwayTeamScore()));
+        return gameToBeUpdated.orElse(null);
     }
 
     private int getNewId() {
