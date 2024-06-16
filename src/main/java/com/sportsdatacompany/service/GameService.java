@@ -98,6 +98,16 @@ public class GameService {
 
     }
 
+    public void printExistingGames() {
+        List<Game> existingGames = gameRepository.findAll();
+        System.out.println("Scoreboard:");
+        for (Game game : existingGames) {
+            System.out.printf("%s - %s: %s - %s, id: %s\r\n", game.getHomeTeam().getName(), game.getAwayTeam().getName(),
+                    game.getHomeTeamScore(), game.getAwayTeamScore(), game.getGameId());
+        }
+        System.out.println();
+    }
+
     private void validateStartGameUserInput(String homeTeamName, String awayTeamName) {
         if (!TeamName.contains(homeTeamName) || !TeamName.contains(awayTeamName)) {
             throw new RuntimeException(

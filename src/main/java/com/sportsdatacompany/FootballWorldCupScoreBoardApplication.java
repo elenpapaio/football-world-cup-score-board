@@ -27,12 +27,15 @@ public class FootballWorldCupScoreBoardApplication {
                 switch (option) {
                     case 1:
                         gameService.startGame();
+                        gameService.printExistingGames();
                         break;
                     case 2:
                         gameService.finishGame();
+                        gameService.printExistingGames();
                         break;
                     case 3:
                         gameService.updateScore();
+                        gameService.printExistingGames();
                         break;
                     case 4:
                         gameService.getGamesByTotalScore();

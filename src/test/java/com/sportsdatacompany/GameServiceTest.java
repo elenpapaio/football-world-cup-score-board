@@ -253,4 +253,31 @@ public class GameServiceTest {
         assertEquals("Spain 2 - Brazil 1\r\nSpain 1 - Italy 1\r\nItaly 1 - Uruguay 1\r\n", outContent.toString());
     }
 
+    @Test
+    @DisplayName("printExistingGames - It should print the existing in the database list")
+    public void printExistingGames() {
+        Game game1 = Game.builder()
+                .gameId(1)
+                .homeTeam(Team.builder().name("Italy").build())
+                .awayTeam(Team.builder().name("Uruguay").build())
+                .homeTeamScore(1)
+                .awayTeamScore(1)
+                .build();
+
+        Game game2 = Game.builder()
+                .gameId(2)
+                .homeTeam(Team.builder().name("Spain").build())
+                .awayTeam(Team.builder().name("Brazil").build())
+                .homeTeamScore(2)
+                .awayTeamScore(1)
+                .build();
+
+        when(gameRepository.findAll()).thenReturn(Arrays.asList(game1, game2));
+
+        gameService.printExistingGames();
+
+        assertEquals("Scoreboard:\r\nItaly - Uruguay: 1 - 1, id: 1\r\nSpain - Brazil: 2 - 1, id: 2\r\n\r\n",
+                outContent.toString());
+    }
+
 }
