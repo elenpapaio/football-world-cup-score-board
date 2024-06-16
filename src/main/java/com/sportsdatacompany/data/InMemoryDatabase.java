@@ -53,6 +53,7 @@ public class InMemoryDatabase {
         return gameToBeUpdated.orElse(null);
     }
 
+    // returns a deep copy of the games array list
     public List<Game> findAllGames() {
         List<Game> gamesClonedList = new ArrayList<>();
         for (Game game : games) {
