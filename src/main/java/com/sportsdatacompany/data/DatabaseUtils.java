@@ -45,8 +45,6 @@ public class DatabaseUtils {
         inMemoryDatabase.insertGame(game3);
         inMemoryDatabase.insertGame(game4);
         inMemoryDatabase.insertGame(game5);
-//        gameList.addAll(new ArrayList<>(Arrays.asList(game1, game2, game3, game4, game5)));
-//        inMemoryDatabase.setNewId(6);
     }
 
 }
