@@ -239,7 +239,7 @@ public class GameServiceTest {
                 .build();
 
         Game game3 = Game.builder()
-                .gameId(2)
+                .gameId(3)
                 .homeTeam(Team.builder().name("Spain").build())
                 .awayTeam(Team.builder().name("Italy").build())
                 .homeTeamScore(1)

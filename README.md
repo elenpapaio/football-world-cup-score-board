@@ -10,7 +10,8 @@ In more detail, the following operations are supported via a central menu:
 - 4 => game summary sorted by total score
 
 Also, there is an extra method, `printExistingGames`, which shows the games that are currently stored in the system. <br/>
-This method is invoked after start, finish and update operations, for the user convenience.
+This method is invoked after start, finish and update operations, for the user convenience. <br/><br/>
+When the application starts, the database is already initialized with some games.
 
 ## Implementation Assumptions
 ### Team names
@@ -27,6 +28,9 @@ The team names that can be used are the following:
 - `Italy`
 - `Argentina`
 - `Australia`
+
+A pair of teams can be inserted again to the application as new game, since it could be considered as a different game
+(e.g. a game has been canceled for force majeure reasons).
 
 ### In-memory database
 In order to store the various information, an `ArrayList` is being used, that is a property of `InMemoryDatabase` class. <br/>

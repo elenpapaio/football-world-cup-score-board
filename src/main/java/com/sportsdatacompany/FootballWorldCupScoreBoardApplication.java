@@ -1,5 +1,6 @@
 package com.sportsdatacompany;
 
+import com.sportsdatacompany.data.DatabaseUtils;
 import com.sportsdatacompany.data.InMemoryDatabase;
 import com.sportsdatacompany.repository.GameRepository;
 import com.sportsdatacompany.service.GameService;
@@ -10,7 +11,10 @@ import java.util.Arrays;
 public class FootballWorldCupScoreBoardApplication {
 
     public static void main(String[] args) {
-        GameService gameService = new GameService(new GameRepository(new InMemoryDatabase()));
+
+        InMemoryDatabase inMemoryDatabase = new InMemoryDatabase();
+        DatabaseUtils.populateDatabase(inMemoryDatabase);
+        GameService gameService = new GameService(new GameRepository(inMemoryDatabase));
 
         boolean exit = false;
 
